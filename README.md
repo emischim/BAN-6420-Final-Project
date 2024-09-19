@@ -51,3 +51,158 @@ This project involves creating a web application for collecting user survey data
    ```bash
    sudo apt-get update
    sudo apt-get install -y python3-pip python3-dev mongodb-clients
+   
+2. **Install Flask and PyMongo:**
+   ```bash
+   pip3 install Flask pymongo
+
+### 4. **Deploying the Flask Application**
+
+1. **Create the Flask Application:**
+   Save the following code as app.py
+  ```bash
+         from flask import Flask, request, render_template
+         from pymongo import MongoClient
+         from pymongo.errors import ConnectionError
+         
+         app = Flask(__name__)
+         
+         try:
+             client = MongoClient("mongodb+srv://<your-username>:<your-password>@cluster1.pnm5w.mongodb.net/<your-db>?retryWrites=true&w=majority")
+             db = client.surveyDB
+             collection = db.surveyCollection
+             print("MongoDB connection successful")
+         except ConnectionError as e:
+             print("MongoDB connection failed:", e)
+             db = None
+         
+         @app.route('/')
+         def index():
+             return render_template('survey.html')
+         
+         @app.route('/submit', methods=['POST'])
+         def submit():
+             if db is None:
+                 return render_template('survey.html', message="Failed to connect to database.")
+         
+             # Extract data from form
+             age = int(request.form['age'])
+             gender = request.form['gender']
+             total_income = float(request.form['total_income'])
+             expenses = {
+                 "utilities": float(request.form.get('utilities', 0)) if request.form.get('expenses[utilities]') else 0,
+                 "entertainment": float(request.form.get('entertainment', 0)) if request.form.get('expenses[entertainment]') else 0,
+                 "school_fees": float(request.form.get('school_fees', 0)) if request.form.get('expenses[school_fees]') else 0,
+                 "shopping": float(request.form.get('shopping', 0)) if request.form.get('expenses[shopping]') else 0,
+                 "healthcare": float(request.form.get('healthcare', 0)) if request.form.get('expenses[healthcare]') else 0,
+             }
+         
+             # Insert data into MongoDB
+             collection.insert_one({
+                 "age": age,
+                 "gender": gender,
+                 "total_income": total_income,
+                 "expenses": expenses
+             })
+         
+             # Render the form again with a success message
+             return render_template('survey.html', message="Submitted")
+         
+            if __name__ == '__main__':
+                app.run(host='0.0.0.0', port=5000, debug=True)
+```
+2. **Create the Flask Application:**
+   Save the following code as app.py
+  ```bash
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h2>Income and Expense Survey</h2>
+    <form action="/submit" method="POST">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select your gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <label for="total_income">Total Income:</label>
+        <input type="number" id="total_income" name="total_income" required>
+
+        <label for="expenses">Select your expenses and specify the amount:</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="expenses[utilities]" value="1"> Utilities: <input type="number" name="utilities" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="expenses[entertainment]" value="1"> Entertainment: <input type="number" name="entertainment" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="expenses[school_fees]" value="1"> School Fees: <input type="number" name="school_fees" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="expenses[shopping]" value="1"> Shopping: <input type="number" name="shopping" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="expenses[healthcare]" value="1"> Healthcare: <input type="number" name="healthcare" placeholder="Amount spent"></label>
+        </div>
+
+        <button type="submit">Submit Survey</button>
+
+        {% if message %}
+            <p style="color: green; text-align: center;">{{ message }}</p>
+        {% endif %}
+    </form>
+</body>
+</html>
+```
