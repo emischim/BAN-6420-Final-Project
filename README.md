@@ -42,15 +42,32 @@ This project involves creating a web application for collecting user survey data
    - Obtain the public IP address of your EC2 instance from the EC2 dashboard.
    - Connect to your instance using SSH:
      ```bash
-     ssh -i "your-key.pem" ubuntu@<your-ec2-public-ip>
+     ssh -i /path/to/your-key.pem ec2-user@your-ec2-instance-public-dns
      ```
+     Replace /path/to/your-key.pem with the actual path to your key file and your-ec2-instance-public-dns with your EC2 instance's public DNS or IP.
 
-### 3. **Setting Up Your EC2 Environment**
+### 3. **Setting Up Your EC2 and Python Environment**
 
 1. **Update and Install Necessary Packages:**
    ```bash
-   sudo apt-get update
-   sudo apt-get install -y python3-pip python3-dev mongodb-clients
+   sudo apt update
+   sudo apt upgrade -y
+   sudo apt install python3-pip python3-venv -y
+
+2. **Create a virtual Environment for your Flask Application
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+   Install Flask, pymongo, and gunicorn in the virtual environment:
+   ```bash
+   pip install Flask pymongo gunicorn
+   ```
+   Install other dependencies like dnspython for MongoDB:
+   ```bash
+   pip install dnspython
+   ```
+
    
 2. **Install Flask and PyMongo:**
    ```bash
