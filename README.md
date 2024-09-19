@@ -93,9 +93,9 @@ This project involves creating a web application for collecting user survey data
          app = Flask(__name__)
          
          # MongoDB connection
-         client = MongoClient("mongodb+srv://emmanuel:Mainasara777*@cluster1.pnm5w.mongodb.net/surveyDB?retryWrites=true&w=majority")
-         db = client["surveyDB"]
-         collection = db["surveyCollection"]
+         client = MongoClient("mongodb+srv://emmanuel:Mainasara777*@cluster1.pnm5w.mongodb.net/flask_db?retryWrites=true&w=majority")
+         db = client["flask_db"]
+         collection = db["user_data"]
          
          # Define the User class
          class User:
