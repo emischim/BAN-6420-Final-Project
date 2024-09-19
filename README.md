@@ -274,7 +274,9 @@ ls templates
    python3 app.py
    ```
    You should now be able to access the form through your Flask app by visiting your EC2 public IP address in the browser.
-4. **Downlooad the ```survey_data.csv``` from the EC2 by running this code
+
+   
+5. **Downlooad the ```survey_data.csv``` from the EC2 by running this code**
    ```bash
    scp -i /path/to/your-key.pem ec2-user@your-ec2-public-ip:/path/to/your-flask-app/survey_data.csv /your/local/directory/
    ```
