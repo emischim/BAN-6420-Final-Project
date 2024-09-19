@@ -59,8 +59,8 @@ This project involves creating a web application for collecting user survey data
 ### 4. **Deploying the Flask Application**
 
 1. **Create the Flask Application:**
-   Save the following code as app.py
-  ```bash
+   Save the following code as ```app.py```
+  ```python
          from flask import Flask, request, render_template
          from pymongo import MongoClient
          from pymongo.errors import ConnectionError
@@ -112,8 +112,8 @@ This project involves creating a web application for collecting user survey data
                 app.run(host='0.0.0.0', port=5000, debug=True)
 ```
 2. **Create the Flask Application:**
-   Save the following code as app.py
-  ```bash
+   Save the following code as ```survey.html```
+  ```html
       <!DOCTYPE html>
 <html lang="en">
 <head>
