@@ -88,6 +88,7 @@ This project involves creating a web application for collecting user survey data
   ```python
          from flask import Flask, render_template, request, redirect
          from pymongo import MongoClient
+         from pymongo.errors import ConnectionFailure
          import csv
          
          app = Flask(__name__)
@@ -106,14 +107,25 @@ This project involves creating a web application for collecting user survey data
                  self.expenses = expenses
          
              # Method to save user data to MongoDB
+                 # Method to save user data to MongoDB
              def save_to_mongo(self):
-                 data = {
-                     'age': self.age,
-                     'gender': self.gender,
-                     'total_income': self.total_income,
-                     'expenses': self.expenses
-                 }
-                 collection.insert_one(data)
+                 try:
+                     # Re-attempt connection to MongoDB before saving
+                     client = MongoClient("mongodb+srv://emmanuel:Mainasara777*@cluster1.pnm5w.mongodb.net/flask_db?retryWrites=true&w=majority")
+                     db = client["flask_db"]
+                     collection = db["user_data"]
+                     
+                     # Insert the data
+                     data = {
+                         'age': self.age,
+                         'gender': self.gender,
+                         'total_income': self.total_income,
+                         'expenses': self.expenses
+                     }
+                     collection.insert_one(data)
+                     print("Data saved to MongoDB successfully.")
+                 except ConnectionFailure as e:
+                     print(f"Failed to connect to MongoDB: {e}")
          
              # Method to save user data to CSV
              def save_to_csv(self, filename='survey_data.csv'):
