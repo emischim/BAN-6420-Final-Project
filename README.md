@@ -59,6 +59,14 @@ This project involves creating a web application for collecting user survey data
 ### 4. **Deploying the Flask Application**
 
 1. **Create the Flask Application:**
+   Navigate to your directory
+   ```bash
+   cd /path/to/your/project-directory
+   ```
+   Use the nano text editor to add the code. Use ```CTRL + O``` to save the changes, press ```ENTER``` and use ```CTRL + X``` to exit
+   ```bash
+   nano app.py
+   ```
    Save the following code as ```app.py```
   ```python
          from flask import Flask, request, render_template
@@ -112,6 +120,11 @@ This project involves creating a web application for collecting user survey data
                 app.run(host='0.0.0.0', port=5000, debug=True)
 ```
 2. **Create the Flask Application:**
+   Create a new template directory
+   ```bash
+   cd /path/to/your/project-directory
+   mkdir templates
+   ```
    Save the following code as ```survey.html```
   ```html
       <!DOCTYPE html>
@@ -206,3 +219,13 @@ This project involves creating a web application for collecting user survey data
 </body>
 </html>
 ```
+Check that the ```survey.html``` is in the ```templates``` directory
+```bash
+ls templates
+```
+
+3. **Run the Flask Application:**
+   ```bash
+   python3 app.py
+   ```
+   You should now be able to access the form through your Flask app by visiting your EC2 public IP address in the browser.
