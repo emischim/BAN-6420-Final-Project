@@ -86,55 +86,44 @@ This project involves creating a web application for collecting user survey data
    ```
    Save the following code as ```app.py```
   ```python
-         from flask import Flask, request, render_template
+         from flask import Flask, render_template, request, redirect
          from pymongo import MongoClient
-         from pymongo.errors import ConnectionError
+         import csv
          
          app = Flask(__name__)
          
-         try:
-             client = MongoClient("mongodb+srv://<your-username>:<your-password>@cluster1.pnm5w.mongodb.net/<your-db>?retryWrites=true&w=majority")
-             db = client.surveyDB
-             collection = db.surveyCollection
-             print("MongoDB connection successful")
-         except ConnectionError as e:
-             print("MongoDB connection failed:", e)
-             db = None
+         # MongoDB connection
+         client = MongoClient("mongodb+srv://emmanuel:Mainasara777*@cluster1.pnm5w.mongodb.net/flask_db?retryWrites=true&w=majority")
+         db = client["flask_db"]
+         collection = db["user_data"]
          
+         # Define the User class
+         class User:
+             def __init__(self, age, gender, total_income, expenses):
+                 self.age = age
+                 self.gender = gender
+                 self.total_income = total_income
+                 self.expenses = expenses
+         
+             # Method to save user data to MongoDB
+             def save_to_mongo(self):
+                 data = {
+                     'age': self.age,
+                     'gender': self.gender,
+                     'total_income': self.total_income,
+                     'expenses': self.expenses
+                 }
+                 collection.insert_one(data)
+         
+             # Method to save user data to CSV
+             def save_to_csv(self, filename='survey_data.csv'):
+                 with open(filename, mode='a', newline='') as file:
+                     writer = csv.writer(file)
+                     writer.writerow([self.age, self.gender, self.total_income, self.expenses])
+         
+         # Home page route to render the form
          @app.route('/')
-         def index():
-             return render_template('survey.html')
-         
-         @app.route('/submit', methods=['POST'])
-         def submit():
-             if db is None:
-                 return render_template('survey.html', message="Failed to connect to database.")
-         
-             # Extract data from form
-             age = int(request.form['age'])
-             gender = request.form['gender']
-             total_income = float(request.form['total_income'])
-             expenses = {
-                 "utilities": float(request.form.get('utilities', 0)) if request.form.get('expenses[utilities]') else 0,
-                 "entertainment": float(request.form.get('entertainment', 0)) if request.form.get('expenses[entertainment]') else 0,
-                 "school_fees": float(request.form.get('school_fees', 0)) if request.form.get('expenses[school_fees]') else 0,
-                 "shopping": float(request.form.get('shopping', 0)) if request.form.get('expenses[shopping]') else 0,
-                 "healthcare": float(request.form.get('healthcare', 0)) if request.form.get('expenses[healthcare]') else 0,
-             }
-         
-             # Insert data into MongoDB
-             collection.insert_one({
-                 "age": age,
-                 "gender": gender,
-                 "total_income": total_income,
-                 "expenses": expenses
-             })
-         
-             # Render the form again with a success message
-             return render_template('survey.html', message="Submitted")
-         
-            if __name__ == '__main__':
-                app.run(host='0.0.0.0', port=5000, debug=True)
+         def survey_form():
 ```
 2. **Create the Flask Application:**
    Create a new template directory
@@ -144,7 +133,7 @@ This project involves creating a web application for collecting user survey data
    ```
    Save the following code as ```survey.html```
   ```html
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -228,10 +217,6 @@ This project involves creating a web application for collecting user survey data
         </div>
 
         <button type="submit">Submit Survey</button>
-
-        {% if message %}
-            <p style="color: green; text-align: center;">{{ message }}</p>
-        {% endif %}
     </form>
 </body>
 </html>
