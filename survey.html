@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h2>Income and Expense Survey</h2>
+    <form action="/submit" method="POST">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select your gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <label for="total_income">Total Income:</label>
+        <input type="number" id="total_income" name="total_income" required>
+
+        <label for="expenses">Select your expenses and specify the amount:</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="utilities" value="0"> Utilities: <input type="number" name="utilities" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="entertainment" value="0"> Entertainment: <input type="number" name="entertainment" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="school_fees" value="0"> School Fees: <input type="number" name="school_fees" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="shopping" value="0"> Shopping: <input type="number" name="shopping" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="healthcare" value="0"> Healthcare: <input type="number" name="healthcare" placeholder="Amount spent"></label>
+        </div>
+
+        <button type="submit">Submit Survey</button>
+    </form>
+</body>
+</html>
