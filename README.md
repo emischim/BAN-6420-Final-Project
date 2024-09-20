@@ -3,7 +3,7 @@
 ## Overview
 
 This project involves creating a web application for collecting user survey data, storing it in MongoDB, processing the data, and deploying the application on an AWS EC2 instance. The survey collects information about users' income and spending patterns.
-You can access my flask app via my EC2 public IP address here ```http://16.170.242.155:5000/``` . I also left my MongoDB connection credentials, so you can confirm that the data actually gets stored in the database
+You can access my survey tool via my EC2 public IP address here ```http://16.170.242.155:5000/``` . I also left my MongoDB connection credentials in this README file, so you can confirm that the data actually gets stored in the database
 
 ## Prerequisites
 
