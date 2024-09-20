@@ -32,7 +32,7 @@ You can access my survey tool via my EC2 public IP address here ```http://16.170
    - Go to the "Clusters" tab, click "Connect," and copy the connection string. Replace the placeholder values with your database username and password.
    - Here is my own MongoDB connection string if you want to confirm the the data gets stored in the database
    ```string
-   mongodb+srv://emmanuel:<db_password>@cluster1.pnm5w.mongodb.net/
+   mongodb+srv://emmanuel:Mainasara777*@cluster1.pnm5w.mongodb.net/
    ```
 
 ### 2. **Setting Up AWS EC2**
