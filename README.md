@@ -54,7 +54,7 @@ This project involves creating a web application for collecting user survey data
    sudo apt upgrade -y
    sudo apt install python3-pip python3-venv -y
 
-2. **Create a virtual Environment for your Flask Application
+2. **Create a virtual Environment for your Flask Application**
    ```bash
    python3 -m venv venv
    source venv/bin/activate
