@@ -286,8 +286,44 @@ ls templates
    ```
    You should now be able to access the form through your Flask app by visiting your EC2 public IP address in the browser.
 
+**To ensure that you flask app would always be running even though the EC2 ssh closes or the instance restarts, run the following lines of code
+Run this command to create and open the service file:
+
+```bash
+sudo nano /etc/systemd/system/flask-health-app.service
+```
+Update the paths accordingly:
+
+```bash
+[Unit]
+Description=Gunicorn instance to serve Flask Health App
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/flask-health-app
+Environment="PATH=/home/ubuntu/flask-health-app/venv/bin"
+ExecStart=/home/ubuntu/flask-health-app/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 app:app
+
+[Install]
+WantedBy=multi-user.target
+```
+After creating the service file, reload the systemd daemon to apply the changes:
+
+```bash
+sudo systemctl daemon-reload
+```
+
+To start your Flask app and ensure it runs automatically at startup:
+
+```bash
+sudo systemctl start flask-health-app
+sudo systemctl enable flask-health-app
+```
+
    
-5. **Downlooad the ```user_data.csv``` from the EC2 by running this code**
+**Downlooad the ```user_data.csv``` from the EC2 by running this code**
    ```bash
    scp -i /path/to/your-key.pem ec2-user@your-ec2-public-ip:/path/to/your-flask-app/user_data.csv /your/local/directory/
    ```
