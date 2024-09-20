@@ -129,7 +129,7 @@ This project involves creating a web application for collecting user survey data
                      print(f"Failed to connect to MongoDB: {e}")
          
              # Method to save user data to CSV
-             def save_to_csv(self, filename='survey_data.csv'):
+             def save_to_csv(self, filename='user_data.csv'):
                  # Check if the file exists
                  file_exists = os.path.isfile(filename)
                  
