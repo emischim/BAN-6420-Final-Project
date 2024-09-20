@@ -292,4 +292,4 @@ ls templates
    ```
    or downloading FileZilla as a GUI to manage the files and download easily
 
-**When you have the csv file, please load the ```user_data.csv``` and ```Final_Project_Flask_Healthcare_Application(Visualizations).ipynb``` into google colab and follow the other instructions on the jupyter notebook**
+## When you have the csv file, please load the ```user_data.csv``` and ```Final_Project_Flask_Healthcare_Application(Visualizations).ipynb``` into google colab and follow the other instructions on the jupyter notebook
