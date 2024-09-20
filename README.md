@@ -262,11 +262,11 @@ This project involves creating a web application for collecting user survey data
 
         <label for="expenses">Select your expenses and specify the amount:</label>
         <div class="checkbox-group">
-            <label><input type="checkbox" name="expenses[utilities]" value="1"> Utilities: <input type="number" name="utilities" placeholder="Amount spent"></label>
-            <label><input type="checkbox" name="expenses[entertainment]" value="1"> Entertainment: <input type="number" name="entertainment" placeholder="Amount spent"></label>
-            <label><input type="checkbox" name="expenses[school_fees]" value="1"> School Fees: <input type="number" name="school_fees" placeholder="Amount spent"></label>
-            <label><input type="checkbox" name="expenses[shopping]" value="1"> Shopping: <input type="number" name="shopping" placeholder="Amount spent"></label>
-            <label><input type="checkbox" name="expenses[healthcare]" value="1"> Healthcare: <input type="number" name="healthcare" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="utilities" value="0"> Utilities: <input type="number" name="utilities" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="entertainment" value="0"> Entertainment: <input type="number" name="entertainment" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="school_fees" value="0"> School Fees: <input type="number" name="school_fees" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="shopping" value="0"> Shopping: <input type="number" name="shopping" placeholder="Amount spent"></label>
+            <label><input type="checkbox" name="healthcare" value="0"> Healthcare: <input type="number" name="healthcare" placeholder="Amount spent"></label>
         </div>
 
         <button type="submit">Submit Survey</button>
