@@ -287,6 +287,7 @@ ls templates
    You should now be able to access the form through your Flask app by visiting your EC2 public IP address in the browser.
 
 **To ensure that you flask app would always be running even though the EC2 ssh closes or the instance restarts, run the following lines of code**
+
 Run this command to create and open the service file:
 
 ```bash
