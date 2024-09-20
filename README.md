@@ -90,6 +90,7 @@ This project involves creating a web application for collecting user survey data
          from pymongo import MongoClient
          from pymongo.errors import ConnectionFailure
          import csv
+         import os
          
          app = Flask(__name__)
          
@@ -129,8 +130,17 @@ This project involves creating a web application for collecting user survey data
          
              # Method to save user data to CSV
              def save_to_csv(self, filename='survey_data.csv'):
+                 # Check if the file exists
+                 file_exists = os.path.isfile(filename)
+                 
                  with open(filename, mode='a', newline='') as file:
                      writer = csv.writer(file)
+                     
+                     # If the file doesn't exist, write the headers
+                     if not file_exists:
+                         writer.writerow(['Age', 'Gender', 'Total_Income', 'Expenses'])
+                     
+                     # Write the user data
                      writer.writerow([self.age, self.gender, self.total_income, self.expenses])
          
          # Home page route to render the form
@@ -166,8 +176,8 @@ This project involves creating a web application for collecting user survey data
          if __name__ == '__main__':
              app.run(host='0.0.0.0', port=5000)
 
-
 ```
+
 2. **Create the Flask Application:**
    Create a new template directory
    ```bash
