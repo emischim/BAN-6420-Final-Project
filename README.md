@@ -288,7 +288,7 @@ ls templates
    
 5. **Downlooad the ```user_data.csv``` from the EC2 by running this code**
    ```bash
-   scp -i /path/to/your-key.pem ec2-user@your-ec2-public-ip:/path/to/your-flask-app/survey_data.csv /your/local/directory/
+   scp -i /path/to/your-key.pem ec2-user@your-ec2-public-ip:/path/to/your-flask-app/user_data.csv /your/local/directory/
    ```
    or downloading FileZilla as a GUI to manage the files and download easily
 
